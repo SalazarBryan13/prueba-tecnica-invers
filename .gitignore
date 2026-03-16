@@ -6,3 +6,7 @@ __pycache__/
 
 # Ignorar archivos de entorno
 .env
+
+# Ignorar datasets (preservar la carpeta data/)
+data/*.csv
+data/*.xlsx
