@@ -10,7 +10,7 @@ Pipeline completo de ingeniería de datos para un dataset hospitalario, cubriend
 ```
 prueba-tecnica-invers/
 ├── data/
-│   └── healthcare_dataset.csv       # Dataset original
+│   └──                              #archivo scv descargado de telegram
 ├── diagrams/
 │   └── DiagramaBD.drawio.png        # Diagrama lógico del Esquema Estrella
 ├── src/
