@@ -97,7 +97,7 @@ def cast_data_types(df: pd.DataFrame) -> pd.DataFrame:
     df['Discharge Date'] = pd.to_datetime(df['Discharge Date'])
     return df
 
-def create_database_if_not_exists(db_uri: str) -> None:
+def create_database(db_uri: str) -> None:
     """
     Crea la base de datos objetivo de PostgreSQL si aún no existe.
     
