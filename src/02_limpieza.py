@@ -164,7 +164,7 @@ def run_cleaning(input_path: str, output_path: str, db_uri: str = None) -> pd.Da
     # 8. Cargar datos limpios al Área Staging de la Base de Datos
     if db_uri:
         print(f"\n[PASO 8] Cargando datos limpios al Área Staging de la Base de Datos...")
-        create_database_if_not_exists(db_uri)
+        create_database(db_uri)
         engine = create_engine(db_uri)
         df_limpio.to_sql('stg_healthcare', con=engine, if_exists='replace', index=False)
         print("La tabla de staging ha sido poblada exitosamente.")
