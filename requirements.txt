@@ -1,0 +1,9 @@
+pandas
+numpy
+sqlalchemy
+psycopg2-binary
+python-telegram-bot
+python-dotenv
+plotly
+kaleido
+streamlit
