@@ -1,6 +1,5 @@
 import pandas as pd
 import numpy as np
-import os
 from sqlalchemy import create_engine, text, make_url
 
 def clean_names(df: pd.DataFrame) -> pd.DataFrame:
