@@ -16,13 +16,14 @@ prueba-tecnica-invers/
 ├── src/
 │   ├── 01_exploracion.ipynb         # Fase 1 — Exploración y diagnóstico
 │   ├── 02_limpieza.py               # Fase 2 — Limpieza y transformación
-│   ├── 03_modelado.py               # Fase 3 — Orquestador ELT
+│   ├── 03_modelado.py               # Fase 3 — Orquestador del modelo Estrella
 │   ├── 04_run_pipeline.py           # Fase 3 — Ejecución del pipeline
 │   ├── bot.py                       # Fase 5 — Chatbot de Telegram (Orquestador)
-│   ├── database.py                  # Capa de Acceso a Datos
-│   ├── schema.sql                   # DDL del Modelo Estrella
-│   └── etl_insert.sql               # Transformación Staging a Estrella
-├── .env                             # Variables de entorno (no versionado)
+│   ├── database.py                  # Capa de Acceso a Datos (DAO)
+│   └── sql/                         # Scripts de Base de Datos
+│       ├── schema.sql               # DDL del Modelo Estrella
+│       └── etl_insert.sql           # Transformación de Staging a modelo Estrella
+├── .env                             # Variables de entorno
 ├── requirements.txt
 └── README.md
 ```
@@ -163,7 +164,7 @@ Se implementó un Bot de Telegram que automatiza el flujo de datos de extremo a 
 ### Flujo automatizado
 
 ```
-Usuario envía CSV → Validación de contrato → Pipeline ELT → Reporte ejecutivo automático
+Usuario envía CSV → Validación de archivo → Pipeline → Reporte ejecutivo automático
 ```
 
 ### Funcionalidades implementadas
