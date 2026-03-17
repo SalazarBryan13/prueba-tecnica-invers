@@ -238,7 +238,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await generate_specific_report(query, query.data)
 
 async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    """Gestiona la recepción de archivos CSV, valida su esquema y ejecuta el pipeline ELT."""
+    """Gestiona la recepción de archivos CSV, valida su esquema y ejecuta el pipeline ."""
     file = update.message.document
     if not file.file_name.endswith('.csv'):
         await update.message.reply_text("Formato no válido. Por favor envía un archivo **CSV**.")
@@ -278,7 +278,7 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         target_path = os.path.join(data_dir, "healthcare_dataset.csv")
         os.replace(temp_path, target_path)
         
-        await status_msg.edit_text("⚙️ **EJECUTANDO PIPELINE ELT...**")
+        await status_msg.edit_text("⚙️ **EJECUTANDO PIPELINE ...**")
         
         # Ejecutamos el pipeline
         await asyncio.to_thread(pipeline.run_end_to_end_pipeline, DATABASE_URL)
