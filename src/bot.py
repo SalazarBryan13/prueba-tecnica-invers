@@ -40,7 +40,8 @@ async def send_automated_executive_report(update: Update):
             f"💰 **Facturacion Total:** ${kpis['total_billing']/1e6:.2f}M",
             f"⚠️ **Resultados Anormales:** {kpis['abnormal_rate']:.1f}%",
             f"🕒 **Estancia Promedio:** {kpis['avg_stay']:.1f} días",
-            "\n--------------------------"
+            "\n--------------------------",
+            "💡 Si deseas visualizar reportes detallados, escribe la palabra **reporte** o usa el menú."
         ]
         
         kpi_text = "\n".join(report_msg)
