@@ -115,7 +115,6 @@ Finalmente, se implementó una dimensión temporal `dim_date`, que permite anali
 
 ## Fase 4 — Visualización y Dashboard
 
-> Script: `src/04_dashboard.py` (Streamlit)
 
 
 ### Q1 — Volumen total de registros por mes. ¿Hay estacionalidad?
@@ -149,7 +148,7 @@ Los resultados muestran que los grupos de edad entre 50 y 70 años representan u
 Asimismo, no se observa una diferencia significativa entre hombres y mujeres, ya que ambos géneros aparecen representados de forma similar en los grupos con mayor facturación.
 
 **Dashboard publicado (Power BI):**
-[Ver dashboard en Power BI](https://app.powerbi.com/view?r=eyJrIjoiN2U2ZmE1ZmItYzFmNy00ZGZmLWJjM2MtNjYzOWFkNTJjYzhiIiwidCI6IjY4MmE0ZTZhLWE3N2YtNDk1OC1hM2FjLTllMjY2ZDE4YWEzNyIsImMiOjR9)
+[Ver dashboard en Power BI](https://app.powerbi.com/view?r=eyJrIjoiMjgxMTEzOWQtY2E1ZC00MGY5LTliZTMtYjllMDIwMTlmNDdjIiwidCI6IjY4MmE0ZTZhLWE3N2YtNDk1OC1hM2FjLTllMjY2ZDE4YWEzNyIsImMiOjR9)
 
 ---
 
