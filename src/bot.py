@@ -22,6 +22,16 @@ engine = create_engine(DATABASE_URL)
 
 # --- MOTOR DE REPORTES ---
 
+def check_data_exists():
+    """Verifica si hay registros en la tabla de hechos."""
+    try:
+        query = "SELECT COUNT(*) FROM fact_admission"
+        count = pd.read_sql(query, engine).iloc[0, 0]
+        return count > 0
+    except:
+        return False
+
+
 async def send_automated_executive_report(update: Update):
     """Genera un reporte completo KPIs + Visualización tras la ingesta."""
     try:
@@ -79,6 +89,14 @@ async def generate_specific_report(update_source, report_type):
     """Genera reportes específicos del menú bajo demanda."""
     message = update_source.message if hasattr(update_source, 'message') else update_source
     
+    # --- VALIDACIÓN DE DATOS ---
+    if not check_data_exists():
+        await message.reply_text(
+            "⚠️ **No hay datos disponibles.**\n\n"
+            "Por favor, envía un archivo **CSV** primero para procesar la información antes de generar reportes."
+        )
+        return
+
     try:
         if report_type == 'q1_seasonality':
             query = """
@@ -139,7 +157,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     """Manda el mensaje inicial con botones."""
     keyboard = [
         [InlineKeyboardButton("📊 Menú de Reportes", callback_data='menu_reports')],
-        [InlineKeyboardButton("📁 Instrucciones CSV", callback_data='csv_info')]
+        [InlineKeyboardButton("📁 Enviar CSV", callback_data='csv_info')]
     ]
     reply_markup = InlineKeyboardMarkup(keyboard)
     
@@ -177,11 +195,15 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     if any(greet in user_text for greet in ["hola", "buen", "saludos", "hi"]):
         reply = (
-            f"¡Hola {update.effective_user.first_name}!\n\n"
-            "Represento la capa conversacional de tu pipeline. "
-            "Para comenzar, puedes enviarme un **archivo CSV** o usar el comando /start para ver reportes."
+            f"¡Hola {update.effective_user.first_name}! 👋\n\n"
+            "¡Es un gusto saludarte! Soy tu **Asistente de Inteligencia Hospitalaria**. 🏥✨\n\n"
+            "Estos son mis **comandos principales**:\n\n"
+            "🔹 /start - Abre el menú principal con todas las opciones.\n"
+            "🔹 **Enviar un CSV** - Sincroniza y limpia tus datos automáticamente.\n"
+            "🔹 **'Reporte'** - Accede directamente al panel de gráficas.\n"
+            "¿En qué puedo apoyarte hoy?"
         )
-        await update.message.reply_text(reply)
+        await update.message.reply_text(reply, parse_mode='Markdown')
     
     elif any(word in user_text for word in ["ayuda", "como","menu"]):
         await start_command(update, context)
