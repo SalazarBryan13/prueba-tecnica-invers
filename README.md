@@ -19,6 +19,7 @@ prueba-tecnica-invers/
 │   ├── 03_modelado.py               # Fase 3 — Orquestador ELT
 │   ├── 04_run_pipeline.py           # Fase 3 — Ejecución del pipeline
 │   ├── bot.py                       # Fase 5 — Chatbot de Telegram (Orquestador)
+│   ├── database.py                  # Capa de Acceso a Datos
 │   ├── schema.sql                   # DDL del Modelo Estrella
 │   └── etl_insert.sql               # Transformación Staging a Estrella
 ├── .env                             # Variables de entorno (no versionado)

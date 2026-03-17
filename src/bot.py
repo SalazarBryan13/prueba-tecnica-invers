@@ -7,6 +7,8 @@ from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, fil
 from sqlalchemy import create_engine
 from dotenv import load_dotenv
 
+from database import DatabaseManager
+
 # Cargar variables de entorno
 load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 
@@ -14,39 +16,21 @@ load_dotenv(os.path.join(os.path.dirname(__file__), "..", ".env"))
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
 DATABASE_URL = os.getenv("DATABASE_URL")
 
+# Inicializar Manejador de Base de Datos
+db_manager = DatabaseManager(DATABASE_URL)
+
 # Importar pipeline
 import importlib
 pipeline = importlib.import_module("04_run_pipeline")
 
-engine = create_engine(DATABASE_URL)
 
 # --- MOTOR DE REPORTES ---
-
-def check_data_exists():
-    """Verifica si hay registros en la tabla de hechos."""
-    try:
-        query = "SELECT COUNT(*) FROM fact_admission"
-        count = pd.read_sql(query, engine).iloc[0, 0]
-        return count > 0
-    except:
-        return False
-
 
 async def send_automated_executive_report(update: Update):
     """Genera un reporte completo KPIs + Visualización tras la ingesta."""
     try:
-        # 1. Obtener KPIs Globales (Incluyendo Estancia Promedio)
-        query_kpis = """
-        SELECT 
-            COUNT(*) as total_records,
-            SUM(f.billing_amount) as total_billing,
-            (SELECT COUNT(*) FROM fact_admission WHERE test_results = 'Abnormal') * 100.0 / COUNT(*) as abnormal_rate,
-            AVG(d2.full_date - d1.full_date) as avg_stay
-        FROM fact_admission f
-        JOIN dim_date d1 ON f.admission_date_id = d1.date_id
-        JOIN dim_date d2 ON f.discharge_date_id = d2.date_id
-        """
-        kpis = pd.read_sql(query_kpis, engine).iloc[0]
+        # 1. Obtener KPIs Globales usando el manager
+        kpis = db_manager.get_executive_kpis()
         
         # 2. Construir Texto
         report_msg = [
@@ -61,14 +45,8 @@ async def send_automated_executive_report(update: Update):
         
         kpi_text = "\n".join(report_msg)
         
-        # 3. Generar Gráfico de Resumen (Top 5 Hospitales)
-        query_chart = """
-        SELECT h.hospital_name, SUM(f.billing_amount) as total 
-        FROM fact_admission f 
-        JOIN dim_hospital h ON f.hospital_id = h.hospital_id 
-        GROUP BY h.hospital_name ORDER BY total DESC LIMIT 5
-        """
-        df = pd.read_sql(query_chart, engine)
+        # 3. Generar Gráfico usando el manager
+        df = db_manager.get_top_hospitals_revenue()
         fig = px.bar(df, x='hospital_name', y='total', title='Estado de Red: Top 5 Hospitales', color='total', template='plotly_dark')
         
         img_path = "auto_report_summary.png"
@@ -90,7 +68,7 @@ async def generate_specific_report(update_source, report_type):
     message = update_source.message if hasattr(update_source, 'message') else update_source
     
     # --- VALIDACIÓN DE DATOS ---
-    if not check_data_exists():
+    if not db_manager.check_data_exists():
         await message.reply_text(
             "⚠️ **No hay datos disponibles.**\n\n"
             "Por favor, envía un archivo **CSV** primero para procesar la información antes de generar reportes."
@@ -98,48 +76,22 @@ async def generate_specific_report(update_source, report_type):
         return
 
     try:
+        df = db_manager.get_report_data(report_type)
+        
         if report_type == 'q1_seasonality':
-            query = """
-            SELECT d.year, d.month, COUNT(*) as admisiones
-            FROM fact_admission f
-            JOIN dim_date d ON f.admission_date_id = d.date_id
-            GROUP BY d.year, d.month ORDER BY d.year, d.month
-            """
-            df = pd.read_sql(query, engine)
             df['Periodo'] = df['year'].astype(str) + "-" + df['month'].astype(str).str.zfill(2)
             fig = px.line(df, x='Periodo', y='admisiones', markers=True, title="Q1: Tendencia de Admisiones", template='plotly_white')
             caption = "📈 **Análisis de Estacionalidad:** Se observa el flujo histórico de ingresos."
             
         elif report_type == 'q2_meds':
-            query = """
-            SELECT m.medication_name, SUM(f.billing_amount) as total
-            FROM fact_admission f
-            JOIN dim_medication m ON f.medication_id = m.medication_id
-            GROUP BY m.medication_name ORDER BY total DESC LIMIT 10
-            """
-            df = pd.read_sql(query, engine)
             fig = px.bar(df, x='total', y='medication_name', orientation='h', title="Q2: Top 10 Medicamentos (Revenue)", color='total')
             caption = "💊 **Impacto de Medicamentos:** Distribución por facturación generada."
 
         elif report_type == 'q5_insurance':
-            query = """
-            SELECT i.provider_name, SUM(f.billing_amount) as total
-            FROM fact_admission f
-            JOIN dim_insurance i ON f.insurance_id = i.insurance_id
-            GROUP BY i.provider_name ORDER BY total DESC
-            """
-            df = pd.read_sql(query, engine)
             fig = px.pie(df, values='total', names='provider_name', title="Q5: Market Share por Aseguradora")
             caption = "🛡️ **Distribución por Seguros:** Concentración de ingresos por proveedor."
 
         elif report_type == 'q_doctors':
-            query = """
-            SELECT d.doctor_name, COUNT(*) as casos, SUM(f.billing_amount) as total
-            FROM fact_admission f
-            JOIN dim_doctor d ON f.doctor_id = d.doctor_id
-            GROUP BY d.doctor_name ORDER BY total DESC LIMIT 10
-            """
-            df = pd.read_sql(query, engine)
             fig = px.scatter(df, x='casos', y='total', size='total', text='doctor_name', title="Rendimiento Médico: Casos vs Facturación")
             caption = "👨‍⚕️ **Desempeño Médico:** Médicos con mayor volumen y facturación asociada."
 
