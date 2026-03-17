@@ -45,7 +45,7 @@ class DatabaseManager:
             return pd.read_sql(query, conn)
 
     def get_report_data(self, report_type: str) -> pd.DataFrame:
-        """Obtiene datos específicos para los diferentes tipos de reportes Qx."""
+        """Obtiene datos específicos para los diferentes tipos de reportes."""
         queries = {
             'q1_seasonality': """
                 SELECT d.year, d.month, COUNT(*) as admisiones
