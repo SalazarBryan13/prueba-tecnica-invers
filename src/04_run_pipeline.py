@@ -35,8 +35,8 @@ def run_end_to_end_pipeline(db_uri: str):
     try:
         # Extraemos las rutas dinámicas necesarias para el script de modelado
 
-        schema_file = os.path.join(script_dir, "schema.sql")
-        elt_file = os.path.join(script_dir, "etl_insert.sql")
+        schema_file = os.path.join(script_dir, "sql", "schema.sql")
+        elt_file = os.path.join(script_dir, "sql", "etl_insert.sql")
         
         # Ejecutar transformación: SQL DDL -> SQL ELT
         modelado.run_elt_pipeline(db_uri, schema_file, elt_file)
@@ -51,4 +51,8 @@ def run_end_to_end_pipeline(db_uri: str):
     print("="*60)
 
 if __name__ == "__main__":
-    run_end_to_end_pipeline(db_uri)
+    database_url = os.getenv("DATABASE_URL")
+    if database_url:
+        run_end_to_end_pipeline(database_url)
+    else:
+        print("Error: DATABASE_URL no encontrada en el archivo .env")
