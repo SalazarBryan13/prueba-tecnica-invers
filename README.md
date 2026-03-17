@@ -145,9 +145,11 @@ Este indicador es relevante para monitorear la proporción de casos que requiere
 
 ### Q5 — ¿Qué grupos de edad y género generan mayor facturación hospitalaria?
 
-Los resultados muestran que los grupos de edad entre 50 y 70 años representan una parte importante de la facturación total, tanto en pacientes masculinos como femeninos. En particular, los grupos cercanos a 60 y 70 años presentan los niveles más altos de facturación, lo que indica que los pacientes de mayor edad tienden a requerir más servicios médicos o tratamientos más costosos.
+Los resultados muestran que los grupos de edad entre 20 y 70 años concentran la mayor parte de la facturación total, tanto en pacientes masculinos como femeninos. Dentro de este rango, las edades cercanas a los 50 y 60 años presentan los niveles más altos de facturación.
 
-Asimismo, no se observa una diferencia significativa entre hombres y mujeres, ya que ambos géneros aparecen representados de forma similar en los grupos con mayor facturación.
+En contraste, los pacientes más jóvenes (menores de 20 años) y los de mayor edad (alrededor de 80 años) presentan una menor facturación total.
+
+Asimismo, no se observan diferencias significativas entre hombres y mujeres, ya que la distribución de la facturación por género es equilibrada en todos los grupos de edad.
 
 **Dashboard publicado (Power BI):**
 [Ver dashboard en Power BI](https://app.powerbi.com/view?r=eyJrIjoiMjgxMTEzOWQtY2E1ZC00MGY5LTliZTMtYjllMDIwMTlmNDdjIiwidCI6IjY4MmE0ZTZhLWE3N2YtNDk1OC1hM2FjLTllMjY2ZDE4YWEzNyIsImMiOjR9)
