@@ -294,7 +294,7 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
         if os.path.exists(temp_path): os.remove(temp_path)
 
 if __name__ == '__main__':
-    print("Chatbot Premium Salud - Online y Escuchando...")
+    print("Chatbot Online y Escuchando...")
     app = ApplicationBuilder().token(TELEGRAM_TOKEN).build()
     
     # Handlers
