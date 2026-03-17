@@ -266,7 +266,14 @@ async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return
 
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        target_path = os.path.join(script_dir, "..", "data", "healthcare_dataset.csv")
+        data_dir = os.path.join(script_dir, "..", "data")
+        
+        # --- CREACIÓN AUTOMÁTICA DE DIRECTORIO ---
+        if not os.path.exists(data_dir):
+            os.makedirs(data_dir)
+            print(f"Directorio creado: {data_dir}")
+
+        target_path = os.path.join(data_dir, "healthcare_dataset.csv")
         os.replace(temp_path, target_path)
         
         await status_msg.edit_text("⚙️ **EJECUTANDO PIPELINE ELT...**")
