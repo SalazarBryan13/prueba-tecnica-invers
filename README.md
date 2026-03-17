@@ -18,8 +18,7 @@ prueba-tecnica-invers/
 │   ├── 02_limpieza.py               # Fase 2 — Limpieza y transformación
 │   ├── 03_modelado.py               # Fase 3 — Orquestador ELT
 │   ├── 04_run_pipeline.py           # Fase 3 — Ejecución del pipeline
-│   ├── 05_telegram_bot.py           # Fase 5 — Bot Telegram
-│   ├── 07_agente_llm.py             # Fase 5 — Agente con reportes automáticos
+│   ├── bot.py                       # Fase 5 — Chatbot de Telegram (Orquestador)
 │   ├── schema.sql                   # DDL del Modelo Estrella
 │   └── etl_insert.sql               # Transformación Staging a Estrella
 ├── .env                             # Variables de entorno (no versionado)
@@ -160,7 +159,7 @@ Asimismo, no se observa una diferencia significativa entre hombres y mujeres, ya
 
 ## Fase 5 — Pipeline y Orquestación (Opcional)
 
-> Script: `src/07_agente_llm.py` (python-telegram-bot)
+> Script: `src/bot.py` (python-telegram-bot)
 
 Se implementó un Bot de Telegram que automatiza el flujo de datos de extremo a extremo mediante un único trigger: el envío de un archivo CSV al chat.
 
@@ -180,7 +179,7 @@ Usuario envía CSV → Validación de contrato → Pipeline ELT → Reporte ejec
 
 **Para ejecutar el bot:**
 ```bash
-python src/07_agente_llm.py
+python src/bot.py
 ```
 
 ---
