@@ -41,10 +41,7 @@ DATABASE_URL=postgresql://usuario:password@localhost:5432/health
 TELEGRAM_TOKEN=tu_token_de_telegram
 ```
 
-**3. Ejecutar el pipeline completo:**
-```bash
-python src/04_run_pipeline.py
-```
+
 
 ---
 
