@@ -5,7 +5,8 @@ class DatabaseManager:
     """Clase para centralizar todas las operaciones de base de datos (Patrón DAO)."""
     
     def __init__(self, db_uri: str):
-        self.engine = create_engine(db_uri)
+        #  verifica que la conexión esté viva antes de usarla
+        self.engine = create_engine(db_uri, pool_pre_ping=True)
 
     def check_data_exists(self) -> bool:
         """Verifica si hay registros en la tabla de hechos."""
