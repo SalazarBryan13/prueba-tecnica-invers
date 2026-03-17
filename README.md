@@ -110,7 +110,7 @@ Finalmente, se implementó una dimensión temporal `dim_date`, que permite anali
 
 ### Diagrama Lógico
 
-![Diagrama Lógico — Modelo Estrella](images/DiagramaBD.drawio.png)
+![Diagrama Lógico — Modelo Estrella](diagrams/DiagramaBD.drawio.png)
 
 
 
