@@ -163,7 +163,7 @@ async def start_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     
     text = (
         "🧠 **HEALTH DATA CHATBOT**\n\n"
-        "Soy tu asistente de Inteligencia de Datos. Puedo procesar tus cargas y generar insights estratégicos.\n\n"
+        "Soy tu asistente virtual. Puedo procesar tus cargas y generar insights estratégicos.\n\n"
         "**¿Qué quieres hacer hoy?**"
     )
     
@@ -214,6 +214,7 @@ async def handle_text(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("No estoy seguro de cómo responder a eso, pero puedes intentar enviándome un CSV para procesar. ¡Usa /start para ver mis opciones!")
 
 async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Maneja las interacciones de los botones en los menús de Telegram."""
     query = update.callback_query
     await query.answer()
     
@@ -237,6 +238,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await generate_specific_report(query, query.data)
 
 async def handle_document(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    """Gestiona la recepción de archivos CSV, valida su esquema y ejecuta el pipeline ELT."""
     file = update.message.document
     if not file.file_name.endswith('.csv'):
         await update.message.reply_text("Formato no válido. Por favor envía un archivo **CSV**.")
