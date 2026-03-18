@@ -167,6 +167,8 @@ Se implementó un Bot de Telegram que automatiza el flujo de datos de extremo a 
 
 ### Flujo automatizado interno
 
+![Diagrama de Flujo del Bot](diagrams/diagrama-flujo-bot.png)
+
 1. **Recepción (bot.py):** El usuario arrastra el archivo CSV al chat.
 2. **Validación:** El sistema verifica que sea un `.csv` y que contenga las 15 columnas requeridas antes de proceder.
 3. **Pipeline - Fase 2 (02_limpieza.py):** Si es válido, el script limpia los datos (duplicados, montos negativos, limpieza de texto, parseo de fechas) y carga los registros limpios a PostgreSQL en una tabla temporal de _staging_ (`stg_healthcare`).
