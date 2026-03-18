@@ -13,6 +13,8 @@ prueba-tecnica-invers/
 │   └──                              #archivo csv descargado de telegram
 ├── diagrams/
 │   └── DiagramaBD.drawio.png        # Diagrama lógico del Esquema Estrella
+├── docs/
+│   └── MANUAL_EJECUCION.md          # Manual de Usuario y Guía de Despliegue
 ├── src/
 │   ├── 01_exploracion.ipynb         # Fase 1 — Exploración y diagnóstico
 │   ├── 02_limpieza.py               # Fase 2 — Limpieza y transformación
