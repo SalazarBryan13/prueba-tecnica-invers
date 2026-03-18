@@ -165,8 +165,8 @@ Se implementó un Bot de Telegram que automatiza el flujo de datos de extremo a 
 
 ### Flujo automatizado
 
-```
-Usuario envía CSV → Validación de archivo → Pipeline → Reporte ejecutivo automático
+```text
+Usuario envía CSV → Validación de archivo → Pipeline (Limpieza y Carga a BD) → Reporte ejecutivo automático
 ```
 
 ### Funcionalidades implementadas
