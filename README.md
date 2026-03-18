@@ -137,7 +137,7 @@ En general, los pacientes del top 10 presentan entre 14 y 25 admisiones, lo que 
 
 ### Q3 — Tiempo promedio entre admisión y alta hospitalaria
 
-El tiempo promedio entre los eventos de admisión y alta hospitalaria es de aproximadamente **15.5 días**. Esto significa que, en promedio, los pacientes permanecen hospitalizados poco más de dos semanas antes de recibir el alta médica.
+El tiempo promedio entre los eventos de admisión y alta hospitalaria es de aproximadamente **15 días**. Esto significa que, en promedio, los pacientes permanecen hospitalizados poco más de dos semanas antes de recibir el alta médica.
 
 ### Q4 — Porcentaje de registros con resultado anormal
 
