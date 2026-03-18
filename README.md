@@ -159,7 +159,7 @@ Asimismo, no se observan diferencias significativas entre hombres y mujeres, ya 
 ---
 
 
-## Fase 5 — Pipeline y Orquestación (Opcional)
+## Fase 5 — Pipeline y Orquestación 
 
 > Script: `src/bot.py` (python-telegram-bot)
 
