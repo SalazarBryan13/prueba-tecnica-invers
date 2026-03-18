@@ -1,7 +1,7 @@
 # Healthcare Data Engineering Pipeline
 **Prueba Técnica — Data Engineer Intern | Invers AI**
 
-Pipeline completo de ingeniería de datos para un dataset hospitalario, cubriendo desde la exploración y limpieza hasta la automatización con un Bot de Telegram.
+Pipeline para un dataset hospitalario, cubriendo desde la exploración y limpieza hasta la automatización con un Bot de Telegram.
 
 ---
 
