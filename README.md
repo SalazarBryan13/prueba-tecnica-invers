@@ -165,11 +165,13 @@ Asimismo, no se observan diferencias significativas entre hombres y mujeres, ya 
 
 Se implementó un Bot de Telegram que automatiza el flujo de datos de extremo a extremo mediante un único trigger: el envío de un archivo CSV al chat.
 
-### Flujo automatizado
+### Flujo automatizado interno
 
-```text
-Usuario envía CSV → Validación de archivo → Pipeline (Limpieza y Carga a BD) → Reporte ejecutivo automático
-```
+1. **Recepción (bot.py):** El usuario arrastra el archivo CSV al chat.
+2. **Validación:** El sistema verifica que sea un `.csv` y que contenga las 15 columnas requeridas antes de proceder.
+3. **Pipeline - Fase 2 (02_limpieza.py):** Si es válido, el script limpia los datos (duplicados, montos negativos, limpieza de texto, parseo de fechas) y carga los registros limpios a PostgreSQL en una tabla temporal de _staging_ (`stg_healthcare`).
+4. **Pipeline - Fase 3 (03_modelado.py):** Se ejecuta el script de base de datos para crear el modelo estrella  mediante `schema.sql` y distribuye los datos desde staging a la tabla de hechos y dimensiones mediante `etl_insert.sql`.
+5. **Generación de Reportes:** Se consultan los KPIs globales desde la base de datos, se genera un gráfico resumen y el bot envía los resultados finales al usuario.
 
 ### Funcionalidades implementadas
 
@@ -192,8 +194,8 @@ python src/bot.py
 |---|---|
 | Lenguaje | Python 3.12 |
 | Almacenamiento | PostgreSQL 16 |
-| ETL / ORM | SQLAlchemy + SQL puro |
-| Visualización | Streamlit + Plotly |
+| ETL | SQLAlchemy + SQL puro |
+| Visualización | Power BI |
 | Automatización | python-telegram-bot |
 | Gestión de entorno | python-dotenv |
 
